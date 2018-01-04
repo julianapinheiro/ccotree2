@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Grade</title>
+        <link rel="stylesheet" href="{% static 'css/grade.css' %}">
+        <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>-->     
+    </head>
+    <body>
+    <div class="page-header">
+        <!--<h1><a href="/">CCO Tree</a></h1>-->
+    </div>
+    <div class="content container">
+            {% block content %}
+            {% endblock %}
+    </div>
+</body>
+</html>

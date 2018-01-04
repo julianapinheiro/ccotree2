@@ -1,0 +1,11 @@
+{% extends 'grade/base.html' %}
+
+{% block content %}
+    {% for disciplina in disciplinas %}
+        <div class="disc" id="' + disciplina.id + '">
+            {{ disciplina.id }}
+            <hr>
+            {{ disciplina.nome }}
+        </div>
+    {% endfor %}
+{% endblock %}
