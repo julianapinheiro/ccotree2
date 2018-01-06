@@ -1,6 +1,10 @@
+/** 
+ *  Source: github.com/gabrielmuller/ccotree 
+ */
+
 html, body {
     height: 100%;
-    overflow: hidden;
+    /*overflow: scroll;*/
 }
 
 body {
@@ -22,12 +26,16 @@ body {
     padding: 10px;
     margin-top: 4px;
     margin-bottom: 4px;
+    width: 100px;
+    height: 80px;
 }
 
 .fase {
     background-color: #42A5F5;
     color: #fff;
     border-color: #42A5F5;
+    width: 100px;
+    height: 80px;
 }
 
 div {
