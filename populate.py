@@ -2,13 +2,12 @@
     Módulo/script para preencher o banco de dados com as disciplinas 
     obrigatórias de CCO.
     A classe Disc foi necessária porque o dict currículo foi reusado de outro
-    projeto. (github.com/gabriellmuller/grafoscurriculo)
+    projeto. (github.com/gabrielmuller/grafoscurriculo)
     
     TO-DO: link da ementa.
 '''
 
-import os, sys, django, json
-from collections import namedtuple
+import os, sys, django
 
 class Disc():
     def __init__(self, nome, horas, fase, requisitos):
@@ -18,35 +17,26 @@ class Disc():
         self.requisitos = requisitos
 
 def populate():
-    # Por algum motivo (?) não criava INE5404 no loop
-    add_disc(id="INE5402", nome="Programação Orientada a Objetos I",
-        fase=1, horas=6, requisitos={})
-    add_disc(id="INE5404", nome="Programação Orientada a Objetos II",
-        fase=2, horas=6, requisitos={"INE5402"})
-
+    num_disc = 0
     for disciplina in curriculo:
-        if disciplina is not "INE5404":
-            add_disc(id=disciplina, nome=curriculo[disciplina].nome, 
-                fase=curriculo[disciplina].fase, 
-                horas=curriculo[disciplina].horas, 
-                requisitos=curriculo[disciplina].requisitos)
+        add_disc(id=disciplina, nome=curriculo[disciplina].nome, 
+            fase=curriculo[disciplina].fase, 
+            horas=curriculo[disciplina].horas, 
+            requisitos=curriculo[disciplina].requisitos)
+        num_disc+=1
+    return num_disc
 
 def add_disc(id, nome, fase, horas, requisitos):
-    print("----------------------------")
-
-    d = Disciplina.objects.create(id=id, 
-        nome=nome, fase=fase, horas=horas)
-    print(d.id)
+    d = Disciplina.objects.create(id=id, nome=nome, fase=fase, horas=horas)
     for req in requisitos:
-        print("req ", req)
         d.requisitos.add((Disciplina.objects.get(id=req)))
     d.save()
 
 curriculo = {
-    #"INE5402": Disc("Programação Orientada a Objetos I", 6, 1, {}),
-    #"INE5404": Disc("Programação Orientada a Objetos II", 6, 2, {
-    #    "INE5402"
-    #}),
+    "INE5402": Disc("Programação Orientada a Objetos I", 6, 1, {}),
+    "INE5404": Disc("Programação Orientada a Objetos II", 6, 2, {
+        "INE5402"
+    }),
     "INE5403": Disc("Matemática Discreta para Computação", 6, 1, {}),
     "MTM3100": Disc("Cálculo 1", 4, 1, {}),
     "EEL5105": Disc("Circuitos e Técnicas Digitais", 5, 1, {}),
@@ -158,4 +148,4 @@ if __name__ == '__main__':
     django.setup()
     from grade.models import Disciplina
     Disciplina.objects.all().delete()
-    populate()
+    print ("Created", populate(), "Disciplina objects.")
