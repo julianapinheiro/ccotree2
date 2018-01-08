@@ -20,3 +20,13 @@ class Disciplina(models.Model):
     def __str__(self):
         return self.id
 
+class DisciplinaView(models.Model):
+    id = models.OneToOneField('Disciplina', on_delete=models.CASCADE, 
+        primary_key=True)
+    posX = models.PositiveIntegerField(default=0)
+    posY = models.PositiveIntegerField(default=0)
+    color = models.CharField(max_length=8, default="#000000")
+
+    def __str__(self):
+        return self.id.id
+

@@ -1,6 +1,7 @@
 '''
-    Módulo/script para preencher o banco de dados com as disciplinas 
-    obrigatórias de CCO.
+    Módulo/script para preencher o banco de dados com objetos Disciplina e
+    Disciplina View referentes ao currículo de CCO.
+
     A classe Disc foi necessária porque o dict currículo foi reusado de outro
     projeto. (github.com/gabrielmuller/grafoscurriculo)
     
@@ -16,31 +17,47 @@ class Disc():
         self.fase = fase
         self.requisitos = requisitos
 
+'''
+    Adiciona todas as disciplinas do dict curriculo.
+    Com gambiarra pra posY de DisciplinaView...
+'''
 def populate():
+    x = 1
+    y = 0
     num_disc = 0
     for disciplina in curriculo:
+        if curriculo[disciplina].fase == x:
+            y += 1
+        else:
+            x += 1
+            y = 1
         add_disc(id=disciplina, nome=curriculo[disciplina].nome, 
             fase=curriculo[disciplina].fase, 
             horas=curriculo[disciplina].horas, 
-            requisitos=curriculo[disciplina].requisitos)
+            requisitos=curriculo[disciplina].requisitos, y=y)
         num_disc+=1
     return num_disc
 
-def add_disc(id, nome, fase, horas, requisitos):
+'''
+    Cria um objeto Disciplina no banco de dados, conforme parâmetros recebidos.
+'''
+def add_disc(id, nome, fase, horas, requisitos, y):
     d = Disciplina.objects.create(id=id, nome=nome, fase=fase, horas=horas)
     for req in requisitos:
         d.requisitos.add((Disciplina.objects.get(id=req)))
     d.save()
+    p = DisciplinaView.objects.create(id=d, posX=fase, posY=y)
+    p.save()
 
 curriculo = {
     "INE5402": Disc("Programação Orientada a Objetos I", 6, 1, {}),
-    "INE5404": Disc("Programação Orientada a Objetos II", 6, 2, {
-        "INE5402"
-    }),
     "INE5403": Disc("Matemática Discreta para Computação", 6, 1, {}),
     "MTM3100": Disc("Cálculo 1", 4, 1, {}),
     "EEL5105": Disc("Circuitos e Técnicas Digitais", 5, 1, {}),
     "INE5401": Disc("Introdução à Computação", 2, 1, {}),
+    "INE5404": Disc("Programação Orientada a Objetos II", 6, 2, {
+        "INE5402"
+    }),
     "INE5405": Disc("Probabilidade e Estatística", 5, 2, {
         "MTM3100"
     }),
@@ -146,6 +163,8 @@ if __name__ == '__main__':
     sys.path.append('PATH_TO_APP/')
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
     django.setup()
-    from grade.models import Disciplina
+    from grade.models import Disciplina, DisciplinaView
     Disciplina.objects.all().delete()
+    DisciplinaView.objects.all().delete()
+    print("Deleted all previous Disciplina objects.")
     print ("Created", populate(), "Disciplina objects.")

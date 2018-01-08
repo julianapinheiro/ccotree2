@@ -1,11 +1,18 @@
 {% extends 'grade/base.html' %}
 
 {% block content %}
+    <div class="matriz">
     {% for disciplina in disciplinas %}
-        <div class="disc" id="' + disciplina.id + '">
-            {{ disciplina.id }}
-            <hr>
-            {{ disciplina.nome }}
-        </div>
+            
+            <div class="disc"
+            style= "left: calc(({{ disciplina.posX }} -1) * 100px + 
+                    {{ disciplina.posX }}*40px) ; 
+                    top: calc((({{ disciplina.posY }} -1) * 120px));">
+                {{ disciplina.id.id }}
+                <hr>
+                {{ disciplina.id.nome }}
+            </div>
+            
     {% endfor %}
+    </div>
 {% endblock %}

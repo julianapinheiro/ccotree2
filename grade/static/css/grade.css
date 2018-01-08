@@ -17,7 +17,7 @@ body {
 }
 
 .disc {
-    /*position: absolute;*/
+    position: absolute;
     border-left-style: solid;
     border-bottom-style: solid;
     border-left-width: 8px;
@@ -25,28 +25,29 @@ body {
     border-bottom-color: #ddd;
     padding: 10px;
     margin-top: 4px;
-    margin-bottom: 4px;
+    margin-left: 4px;
     width: 100px;
     height: 80px;
 }
 
-.fase {
+/*.fase {
     background-color: #42A5F5;
     color: #fff;
     border-color: #42A5F5;
     width: 100px;
     height: 80px;
-}
+}*/
+
+/*.matriz{
+    margin-top: 30px;
+    margin-left: 50px;
+    background-color: #90CAF9;
+}*/
 
 div {
     background-color: #fff;
     user-select: none;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.06), 0 1px 1px rgba(0,0,0,0.09);
-}
-
-img {
-    -webkit-user-drag: none;
-    user-select: none;
+    /*box-shadow: 0 14px 28px rgba(0,0,0,0.06), 0 1px 1px rgba(0,0,0,0.09);*/
 }
 
 hr {
@@ -65,6 +66,8 @@ img {
     height: 20px;
     margin-left: 5px;
     margin-top: -3px;
+    -webkit-user-drag: none;
+    user-select: none;
 }
 
 #info {
